@@ -44,8 +44,9 @@
 		<p>Made by <a href="http://www.pytux.it">FiloSottile</a> (<a href="http://twitter.com/FiloSottile">Twitter</a> - <a href="https://github.com/FiloSottile">GitHub</a>). Code under <a href="http://filosottile.mit-license.org/">MIT license</a>.</p>
 	</div>
 
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-	<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/js/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.1.1/bootstrap.min.js"></script>
 	<script src="http://cdn.leafletjs.com/leaflet-0.4/leaflet.js"></script>
 
 	<script>
@@ -58,7 +59,11 @@
 		
 		$.getJSON('biglumber.json', function(data) {
 		  $.each(data, function(key, val) {
-		    L.marker(val[1]).addTo(map);
+		    marker = L.marker(val[1]).addTo(map);
+		    marker.bindPopup("<strong>" + val[0] + "</strong><br>Listings: " + val[2]);
+		    marker.on('click', function(e) { // Created inside the $.each callback function on purpose to get access to marker and val
+    			console.log(val);
+			});
 		  });
 		});
 	});
