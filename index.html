@@ -8,6 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.css" />
 	<!--[if lte IE 8]>
 		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.ie.css" />
@@ -47,6 +48,7 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.1.1/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.1/jquery.fancybox.pack.js"></script>
 	<script src="http://cdn.leafletjs.com/leaflet-0.4/leaflet.js"></script>
 
 	<script>
@@ -56,14 +58,17 @@
     		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
     		maxZoom: 18
 		}).addTo(map);
+
+		function show_listings(key) {
+			console.log(key);
+			console.log(biglumber_data[key]);
+		}
 		
 		$.getJSON('biglumber.json', function(data) {
+		  window.biglumber_data = data;
 		  $.each(data, function(key, val) {
 		    marker = L.marker(val[1]).addTo(map);
-		    marker.bindPopup("<strong>" + val[0] + "</strong><br>Listings: " + val[2]);
-		    marker.on('click', function(e) { // Created inside the $.each callback function on purpose to get access to marker and val
-    			console.log(val);
-			});
+		    marker.bindPopup("<strong>" + val[0] + "</strong><br>Listings: " + val[2] + "<br><a href=\"#\" onclick=\"show_listings(" + key + ")\">View »</a>");
 		  });
 		});
 	});
