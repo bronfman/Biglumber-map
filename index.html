@@ -44,15 +44,24 @@
 		<p>Made by <a href="http://www.pytux.it">FiloSottile</a> (<a href="http://twitter.com/FiloSottile">Twitter</a> - <a href="https://github.com/FiloSottile">GitHub</a>). Code under <a href="http://filosottile.mit-license.org/">MIT license</a>.</p>
 	</div>
 
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 	<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/js/bootstrap.min.js"></script>
 	<script src="http://cdn.leafletjs.com/leaflet-0.4/leaflet.js"></script>
 
 	<script>
+	$(document).ready(function(){
 		var map = L.map('map').setView([30, 0], 2);
 		L.tileLayer('http://{s}.tile.cloudmade.com/9a88461e8f114afe8ecd1fd41795769f/997/256/{z}/{x}/{y}.png', {
     		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
     		maxZoom: 18
 		}).addTo(map);
+		
+		$.getJSON('biglumber.json', function(data) {
+		  $.each(data, function(key, val) {
+		    L.marker(val[1]).addTo(map);
+		  });
+		});
+	});
 	</script>
 
 	<script src="//static.getclicky.com/js" type="text/javascript"></script>
